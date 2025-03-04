@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GroqChat - AI Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chat-container {
+            height: calc(100vh - 180px);
+        }
+        .message-appear {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-white shadow-sm">
+            <div class="max-w-5xl mx-auto px-4 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-robot text-blue-600 text-2xl"></i>
+                        <h1 class="text-xl font-semibold text-gray-800">GroqChat</h1>
+                    </div>
+                    <div class="text-sm text-gray-500">Powered by Groq AI</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Chat Area -->
+        <main class="max-w-5xl mx-auto px-4 py-8">
+            <!-- Chat Container -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <!-- Chat Messages -->
+                <div id="chat-messages" class="chat-container overflow-y-auto p-4 space-y-4">
+                    <div class="message-appear flex items-start space-x-3">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-robot text-blue-600 text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-gray-800">Hello! I'm your AI assistant powered by Groq. How can I help you today?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="border-t border-gray-200 p-4">
+                    <form id="chat-form" class="flex items-center space-x-3">
+                        <div class="flex-1 relative">
+                            <textarea 
+                                id="user-input"
+                                rows="1"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                                placeholder="Type your message..."
+                            ></textarea>
+                        </div>
+                        <button 
+                            type="submit"
+                            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                        >
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
