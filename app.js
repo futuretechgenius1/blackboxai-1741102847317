@@ -28,9 +28,17 @@ class ChatApp {
 
     async handleSubmit(e) {
         e.preventDefault();
+        console.log('Form submitted');
+        console.log('Input element:', this.userInput);
+        console.log('Raw input value:', this.userInput.value);
         const message = this.userInput.value.trim();
-        if (!message) return;
+        console.log('Trimmed message:', message);
+        if (!message) {
+            console.log('Empty message, ignoring submission');
+            return;
+        }
 
+        console.log('Processing message:', message);
         // Add user message to chat
         this.addMessage(message, 'user');
         this.userInput.value = '';
@@ -39,15 +47,19 @@ class ChatApp {
         try {
             // Show loading state
             const loadingId = this.addLoadingMessage();
+            console.log('Added loading message:', loadingId);
 
             // Get AI response
+            console.log('Requesting AI response...');
             const response = await this.getAIResponse(message);
+            console.log('Received AI response:', response);
 
             // Remove loading message and add AI response
             this.removeLoadingMessage(loadingId);
             this.addMessage(response, 'ai');
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error in handleSubmit:', error);
+            this.removeLoadingMessage(loadingId);
             this.addErrorMessage();
         }
     }
@@ -117,6 +129,7 @@ class ChatApp {
 
     async getAIResponse(message) {
         try {
+            console.log('Sending message to API:', message);
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: {
@@ -125,17 +138,24 @@ class ChatApp {
                 body: JSON.stringify({ message })
             });
 
+            console.log('API Response status:', response.status);
             if (!response.ok) {
-                throw new Error('API request failed');
+                const errorText = await response.text();
+                console.error('API Error:', errorText);
+                throw new Error(`API request failed: ${response.status} ${errorText}`);
             }
 
             const data = await response.json();
+            console.log('API Response data:', data);
             return data.response;
         } catch (error) {
-            throw new Error('Failed to get AI response');
+            console.error('Error in getAIResponse:', error);
+            throw error;
         }
     }
 }
 
-// Initialize the chat app
-new ChatApp();
+// Initialize the chat app when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    window.chatApp = new ChatApp();
+});
