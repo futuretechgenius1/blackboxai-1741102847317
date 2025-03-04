@@ -26,8 +26,10 @@ const groq = new Groq({
 
 // Chat endpoint
 app.post('/api/chat', async (req, res) => {
+    console.log('Received chat request:', req.body);
     try {
         const { message } = req.body;
+        console.log('Processing message:', message);
 
         const chatCompletion = await groq.chat.completions.create({
             messages: [
